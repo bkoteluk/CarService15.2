@@ -31,11 +31,14 @@ public class CarService {
         int choice;
         try {
             while ((choice = displayMenu()) != 0) {
-                if (choice == 1) {
-                    serviceQueue.offer(newCarData());
-                } else if (choice == 2) {
-                    carToService();
-                } else {
+                switch (choice) {
+                    case 1:
+                        serviceQueue.offer(newCarData());
+                        break;
+                    case 2:
+                        carToService();
+                        break;
+                    default:
                     System.out.println("Wybierz poprawną opcję programu (0, 1 lub 2)");;
                 }
             }
@@ -54,7 +57,6 @@ public class CarService {
     }
 
     private static int displayMenu() throws InputMismatchException {
-//        Scanner sc = new Scanner(System.in);
         System.out.println(" 0 - wyjście z programu");
         System.out.println(" 1 - przyjęcie samochodu do serwisu (do kolejki)");
         System.out.println(" 2 - pobranie samochodu z kolejki do serwisu");
@@ -65,7 +67,6 @@ public class CarService {
 
     private static Car newCarData() throws InputMismatchException {
         Car car = new Car();
-//        Scanner sc = new Scanner(System.in);
         System.out.print("Podaj typ pojazdu: ");
         car.setType(sc.nextLine());
         System.out.print("Podaj model :");

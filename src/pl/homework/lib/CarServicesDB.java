@@ -21,7 +21,6 @@ public class CarServicesDB {
         bufferedReader.close();
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
         bufferedWriter.write("");
-        bufferedWriter.flush();
         bufferedWriter.close();
         return cars;
     }
@@ -32,7 +31,6 @@ public class CarServicesDB {
         do {
            bufferedWriter.write(queue.poll().toCSV());
         } while ( !queue.isEmpty());
-        bufferedWriter.flush();
         bufferedWriter.close();
     }
 }
