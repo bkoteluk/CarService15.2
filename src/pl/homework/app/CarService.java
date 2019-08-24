@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class CarService {
     public static Queue<Car> serviceQueue = new LinkedList<>();
+    public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args)  {
         CarServicesDB carServicesDB = new CarServicesDB();
@@ -27,34 +28,33 @@ public class CarService {
     }
 
     private static void menu() {
-        boolean exit = false;
+        int choice;
         try {
-            while (!exit)
-                switch (displayMenu()) {
-                    case 0 :
-                        exit = true;
-                        break;
-                    case 1:
-                        serviceQueue.offer(newCarData());
-                        break;
-                    case 2:
-                        Car car = serviceQueue.poll();
-                        if ( car != null) {
-                            System.out.println("Serwisowany pojazd: " + car);
-                        } else {
-                            System.out.println("Brak pojazdów oczekujących na serwis w kolejce");
-                        }
-                        break;
-                    default:
-                        System.out.println("Wybierz poprawną opcję programu (0, 1 lub 2)");;
+            while ((choice = displayMenu()) != 0) {
+                if (choice == 1) {
+                    serviceQueue.offer(newCarData());
+                } else if (choice == 2) {
+                    carToService();
+                } else {
+                    System.out.println("Wybierz poprawną opcję programu (0, 1 lub 2)");;
                 }
+            }
         } catch (InputMismatchException ex) {
             System.out.println("Wprowadzono niepoprawną wartość");
         }
     }
 
+    private static void carToService(){
+        Car car = serviceQueue.poll();
+        if ( car != null) {
+            System.out.println("Serwisowany pojazd: " + car);
+        } else {
+            System.out.println("Brak pojazdów oczekujących na serwis w kolejce");
+        }
+    }
+
     private static int displayMenu() throws InputMismatchException {
-        Scanner sc = new Scanner(System.in);
+//        Scanner sc = new Scanner(System.in);
         System.out.println(" 0 - wyjście z programu");
         System.out.println(" 1 - przyjęcie samochodu do serwisu (do kolejki)");
         System.out.println(" 2 - pobranie samochodu z kolejki do serwisu");
@@ -63,9 +63,9 @@ public class CarService {
         return choice;
     }
 
-    private static Car newCarData() {
+    private static Car newCarData() throws InputMismatchException {
         Car car = new Car();
-        Scanner sc = new Scanner(System.in);
+//        Scanner sc = new Scanner(System.in);
         System.out.print("Podaj typ pojazdu: ");
         car.setType(sc.nextLine());
         System.out.print("Podaj model :");
